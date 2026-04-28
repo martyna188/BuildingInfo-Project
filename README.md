@@ -7,8 +7,8 @@ For building administrators who want to minimise the costs of building managemen
 - A location is a building, level, or room
 - The building may consist of levels and those of rooms
 - Each location is characterized by:
-    - o id – unique identifier
-    - o name – optional name of the location
+    - id – unique identifier
+    - name – optional name of the location
 - The room is additionally characterised by:
    - area = area in m^2
    - cube = room volume in m^3
