@@ -1,4 +1,4 @@
-package pl.put.poznan.transformer.logic;
+package pl.put.poznan.buildinginfo.logic;
 
 public class AreaVisitor implements Visitor{
     private long total_area = 0;

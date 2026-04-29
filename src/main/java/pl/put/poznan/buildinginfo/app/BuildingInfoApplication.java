@@ -1,4 +1,4 @@
-package pl.put.poznan.transformer.app;
+package pl.put.poznan.buildinginfo.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
