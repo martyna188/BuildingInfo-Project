@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication(scanBasePackages = {"pl.put.poznan.transformer.rest"})
-public class TextTransformerApplication {
+public class BuildingInfoApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TextTransformerApplication.class, args);
+        SpringApplication.run(BuildingInfoApplication.class, args);
     }
 }
