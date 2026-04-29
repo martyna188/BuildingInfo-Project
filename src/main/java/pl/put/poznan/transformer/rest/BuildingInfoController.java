@@ -2,45 +2,29 @@ package pl.put.poznan.transformer.rest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
-import pl.put.poznan.transformer.logic.BuildingInfo;
-
-import java.util.Arrays;
+import pl.put.poznan.transformer.logic.AreaVisitor;
+import pl.put.poznan.transformer.logic.Building;
 
 
 @RestController
-@RequestMapping("/{text}")
+@RequestMapping("/buildings")
 public class BuildingInfoController {
 
     private static final Logger logger = LoggerFactory.getLogger(BuildingInfoController.class);
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public String get(@PathVariable String text,
-                              @RequestParam(value="transforms", defaultValue="upper,escape") String[] transforms) {
+    @RequestMapping(value = "/area", method = RequestMethod.POST, produces = "application/json")
+    public long getArea(@RequestBody Building building) {
 
         // log the parameters
-        logger.debug(text);
-        logger.debug(Arrays.toString(transforms));
+        logger.debug("Calculating Area for: " + building.getName());
 
         // perform the transformation, you should run your logic here, below is just a silly example
-        BuildingInfo transformer = new BuildingInfo(transforms);
-        return transformer.transform(text);
+        AreaVisitor areaVisitor = new AreaVisitor();
+        building.accept(areaVisitor);
+        logger.debug("Area of: " + building.getName() + ": " + areaVisitor.getResult());
+
+        return areaVisitor.getResult();
     }
-
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public String post(@PathVariable String text,
-                      @RequestBody String[] transforms) {
-
-        // log the parameters
-        logger.debug(text);
-        logger.debug(Arrays.toString(transforms));
-
-        // perform the transformation, you should run your logic here, below is just a silly example
-        BuildingInfo transformer = new BuildingInfo(transforms);
-        return transformer.transform(text);
     }
-
-
-
-}
 
 
