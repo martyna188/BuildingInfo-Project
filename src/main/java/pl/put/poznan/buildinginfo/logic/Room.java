@@ -32,6 +32,7 @@ public class Room implements Location{
     public long checkHeating(){
         return this.roomHeating;
     }
+
     public void setId(int id) { this.id = id; }
     public void setName(String name) { this.name = name; }
     public void setRoomArea(long roomArea) { this.roomArea = roomArea; }
