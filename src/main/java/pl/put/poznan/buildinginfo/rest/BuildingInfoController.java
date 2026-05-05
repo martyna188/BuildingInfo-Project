@@ -76,6 +76,30 @@ public class BuildingInfoController {
         return areaVisitor.getResult();
     }
 
+    @RequestMapping(value = "/cubature/building/{targetBuildingID}", method = RequestMethod.GET, produces = "application/json")
+    public long getCubatureBuilding(@PathVariable int targetBuildingID) {
+        Building targetBuilding = findBuildingExists(targetBuildingID);
+        CubatureVisitor cubatureVisitor = creatingCubatureVisitor(targetBuilding);
+        return cubatureVisitor.getResult();
+    }
+
+    @RequestMapping(value = "/cubature/level/{targetBuildingID}/{targetLevelID}", method = RequestMethod.GET, produces = "application/json")
+    public long getCubatureLevel(@PathVariable int targetBuildingID, @PathVariable int targetLevelID) {
+        Building targetBuilding = findBuildingExists(targetBuildingID);
+        Level targetLevel = findLevelExists(targetBuilding, targetLevelID);
+        CubatureVisitor cubatureVisitor = creatingCubatureVisitor(targetLevel);
+        return cubatureVisitor.getResult();
+    }
+
+    @RequestMapping(value = "/cubature/room/{targetBuildingID}/{targetLevelID}/{targetRoomID}", method = RequestMethod.GET, produces = "application/json")
+    public long getCubatureRoom(@PathVariable int targetBuildingID, @PathVariable int targetLevelID, @PathVariable int targetRoomID) {
+        Building targetBuilding = findBuildingExists(targetBuildingID);
+        Level targetLevel = findLevelExists(targetBuilding, targetLevelID);
+        Room targetRoom = findRoomExists(targetLevel, targetRoomID);
+        CubatureVisitor cubatureVisitor = creatingCubatureVisitor(targetRoom);
+        return cubatureVisitor.getResult();
+    }
+
     private Building findBuildingExists (int targetBuildingId) {
         logger.debug("[findBuildingExists] Looking for building with ID " + targetBuildingId);
         for (Building building : buildingsCollection) {
@@ -118,6 +142,14 @@ public class BuildingInfoController {
         targetLocation.accept(areaVisitor);
         logger.debug("[creatingAreaVisitor] Area of: " + targetLocation.getName() + ": " + areaVisitor.getResult());
         return areaVisitor;
+    }
+
+    private CubatureVisitor creatingCubatureVisitor(Location targetLocation) {
+        logger.debug("[creatingCubatureVisitor] Creating Cubature Visitor and calculating Cubature for location");
+        CubatureVisitor cubatureVisitor = new CubatureVisitor();
+        targetLocation.accept(cubatureVisitor);
+        logger.debug("[creatingCubatureVisitor] Cubature of: " + targetLocation.getName() + ": " + cubatureVisitor.getResult());
+        return cubatureVisitor;
     }
 }
 
