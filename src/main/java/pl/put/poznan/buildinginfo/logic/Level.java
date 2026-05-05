@@ -55,4 +55,8 @@ public class Level implements Location{
             c.accept(v);
         }
     }
+
+    public ArrayList<Room> getChildrenRooms(){
+        return this.childrenRooms;
+    }
 }
