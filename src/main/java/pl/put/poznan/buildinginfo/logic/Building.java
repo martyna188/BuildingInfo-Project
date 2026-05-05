@@ -26,4 +26,8 @@ public class Building implements Location{
             c.accept(v);
         }
     }
+
+    public ArrayList<Level> getChildrenLevels(){
+        return this.childrenLevels;
+    }
 }
