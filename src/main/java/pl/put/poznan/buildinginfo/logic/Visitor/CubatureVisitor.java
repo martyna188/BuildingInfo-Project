@@ -1,6 +1,8 @@
-package pl.put.poznan.buildinginfo.logic;
+package pl.put.poznan.buildinginfo.logic.Visitor;
 
-public class CubatureVisitor implements Visitor{
+import pl.put.poznan.buildinginfo.logic.Composite.Room;
+
+public class CubatureVisitor implements Visitor {
     /**
      * Variable used for summing the cubatures.
      * Initially equals 0

@@ -1,6 +1,8 @@
-package pl.put.poznan.buildinginfo.logic;
+package pl.put.poznan.buildinginfo.logic.Visitor;
 
-public class AreaVisitor implements Visitor{
+import pl.put.poznan.buildinginfo.logic.Composite.Room;
+
+public class AreaVisitor implements Visitor {
     /**
      * Variable used for summing the area.
      * Initially equals 0
