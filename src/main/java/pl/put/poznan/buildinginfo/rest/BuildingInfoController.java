@@ -63,7 +63,7 @@ public class BuildingInfoController {
     /**
      * calculating area of the room from provided level from building collection we already store
      * @param targetBuildingID id of the building from which we want level
-     * @param targetLevelID id of the level from which we want area
+     * @param targetLevelID id of the level from which we want room
      * @param targetRoomID id of the room from which we want area
      * @return area of the room
      */
@@ -76,6 +76,11 @@ public class BuildingInfoController {
         return areaVisitor.getResult();
     }
 
+    /**
+     * calculating cubature of the level from building collection we already store
+     * @param targetBuildingID id of the building from which we want cubature
+     * @return total cubature of the building
+     */
     @RequestMapping(value = "/cubature/building/{targetBuildingID}", method = RequestMethod.GET, produces = "application/json")
     public long getCubatureBuilding(@PathVariable int targetBuildingID) {
         Building targetBuilding = findBuildingExists(targetBuildingID);
@@ -83,6 +88,12 @@ public class BuildingInfoController {
         return cubatureVisitor.getResult();
     }
 
+    /**
+     * calculating cubature of the level from building collection we already store
+     * @param targetBuildingID id of the building from which we want level
+     * @param targetLevelID id of the level from which we want cubature
+     * @return total cubature of the level
+     */
     @RequestMapping(value = "/cubature/level/{targetBuildingID}/{targetLevelID}", method = RequestMethod.GET, produces = "application/json")
     public long getCubatureLevel(@PathVariable int targetBuildingID, @PathVariable int targetLevelID) {
         Building targetBuilding = findBuildingExists(targetBuildingID);
@@ -91,6 +102,13 @@ public class BuildingInfoController {
         return cubatureVisitor.getResult();
     }
 
+    /**
+     * calculating cubature of the room from provided level from building collection we already store
+     * @param targetBuildingID id of the building from which we want level
+     * @param targetLevelID id of the level from which we want room
+     * @param targetRoomID  id of the room from which we want cubature
+     * @return cubature of the room
+     */
     @RequestMapping(value = "/cubature/room/{targetBuildingID}/{targetLevelID}/{targetRoomID}", method = RequestMethod.GET, produces = "application/json")
     public long getCubatureRoom(@PathVariable int targetBuildingID, @PathVariable int targetLevelID, @PathVariable int targetRoomID) {
         Building targetBuilding = findBuildingExists(targetBuildingID);
