@@ -1,4 +1,6 @@
-package pl.put.poznan.buildinginfo.logic;
+package pl.put.poznan.buildinginfo.logic.Visitor;
+
+import pl.put.poznan.buildinginfo.logic.Composite.Room;
 
 /**
  * Defines an operation to be performed on the elements of Room.

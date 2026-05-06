@@ -1,4 +1,6 @@
-package pl.put.poznan.buildinginfo.logic;
+package pl.put.poznan.buildinginfo.logic.Composite;
+
+import pl.put.poznan.buildinginfo.logic.Visitor.Visitor;
 
 /**
  * Represents a physical node that can be processed by the concrete Visitor

@@ -1,8 +1,10 @@
-package pl.put.poznan.buildinginfo.logic;
+package pl.put.poznan.buildinginfo.logic.Composite;
+
+import pl.put.poznan.buildinginfo.logic.Visitor.Visitor;
 
 import java.util.ArrayList;
 
-public class Level implements Location{
+public class Level implements Location {
     public Level() { }
     private int id;
     private String name;

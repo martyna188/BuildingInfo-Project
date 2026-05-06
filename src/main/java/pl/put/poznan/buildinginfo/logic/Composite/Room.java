@@ -1,6 +1,8 @@
-package pl.put.poznan.buildinginfo.logic;
+package pl.put.poznan.buildinginfo.logic.Composite;
 
-public class Room implements Location{
+import pl.put.poznan.buildinginfo.logic.Visitor.Visitor;
+
+public class Room implements Location {
     private int id;
     private String name;
     private long roomArea;
