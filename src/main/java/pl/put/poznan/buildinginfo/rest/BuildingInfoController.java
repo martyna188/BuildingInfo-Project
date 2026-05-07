@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.buildinginfo.logic.Composite.Building;
 import pl.put.poznan.buildinginfo.logic.Composite.Level;
 import pl.put.poznan.buildinginfo.logic.Composite.Room;
+import pl.put.poznan.buildinginfo.logic.Composite.Scheme;
 import pl.put.poznan.buildinginfo.logic.Visitor.*;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -16,27 +17,32 @@ public class BuildingInfoController {
     /** logger for sending debugging information */
     public static final Logger logger = LoggerFactory.getLogger(BuildingInfoController.class);
     /** List  of buildings we store for later access */
-    private final List<Building> buildingsCollection = new CopyOnWriteArrayList<>();
+    //private final List<Building> buildingsCollection = new CopyOnWriteArrayList<>();
     /** Helper that store all needed functions for computations*/
     private final ControllerHelper helper;
+
+    private Scheme scheme;
 
     /**
      * Constructor for helper which store all needed functions for computations
      * This Constructor is used by Spring and is triggered when applications starts
      * @param helper helper utility for storing all needed functions for calculation
      */
-    public BuildingInfoController(ControllerHelper helper) {this.helper = helper;}
+    public BuildingInfoController(ControllerHelper helper) {
+        this.helper = helper;
+    }
     /**
      * function for accepting building for later access
-     * @param building input in JSON format with building, levels and rooms (each with id, name
+     * @param scheme input in JSON format with building, levels and rooms (each with id, name
      *                 and room with additional area, volume, light and heating
      */
-    @RequestMapping(value = "/building/post", method = RequestMethod.POST, produces = "application/json")
-    public void sendBuilding(@RequestBody Building building) {
-
-        logger.debug("Adding building to collection: " + building.getName()+ " with ID "+ building.getId());
-        buildingsCollection.add(building);
-        logger.debug("Building send: " + building.getName());
+    @RequestMapping(value = "/scheme/post", method = RequestMethod.POST, produces = "application/json")
+    public void sendBuilding(@RequestBody Scheme scheme) {
+        this.scheme = scheme;
+        logger.debug(scheme.getBuildings().toString());
+        logger.debug("HEREEEEEEEE");
+        logger.debug("Adding building to collection:  with ID ");
+        //logger.debug("Building send: " + building.getName());
     }
 
 
@@ -47,7 +53,7 @@ public class BuildingInfoController {
      */
     @RequestMapping(value = "/area/building/{targetBuildingID}", method = RequestMethod.GET, produces = "application/json")
     public long getAreaBuilding(@PathVariable int targetBuildingID) {
-        Building targetBuilding = helper.findBuildingExists(buildingsCollection, targetBuildingID);
+        Building targetBuilding = helper.findBuildingExists(scheme.getBuildings(), targetBuildingID);
         AreaVisitor areaVisitor = helper.creatingAreaVisitor(targetBuilding);
         return areaVisitor.getResult();
     }
@@ -60,7 +66,7 @@ public class BuildingInfoController {
      */
     @RequestMapping(value = "/area/level/{targetBuildingID}/{targetLevelID}", method = RequestMethod.GET, produces = "application/json")
     public long getAreaLevel(@PathVariable int targetBuildingID, @PathVariable int targetLevelID) {
-        Building targetBuilding = helper.findBuildingExists(buildingsCollection, targetBuildingID);
+        Building targetBuilding = helper.findBuildingExists(scheme.getBuildings(), targetBuildingID);
         Level targetLevel = helper.findLevelExists(targetBuilding, targetLevelID);
         AreaVisitor areaVisitor = helper.creatingAreaVisitor(targetLevel);
         return areaVisitor.getResult();
@@ -75,7 +81,7 @@ public class BuildingInfoController {
      */
     @RequestMapping(value = "/area/room/{targetBuildingID}/{targetLevelID}/{targetRoomID}", method = RequestMethod.GET, produces = "application/json")
     public long getAreaRoom(@PathVariable int targetBuildingID, @PathVariable int targetLevelID, @PathVariable int targetRoomID) {
-        Building targetBuilding = helper.findBuildingExists(buildingsCollection, targetBuildingID);
+        Building targetBuilding = helper.findBuildingExists(scheme.getBuildings(), targetBuildingID);
         Level targetLevel = helper.findLevelExists(targetBuilding, targetLevelID);
         Room targetRoom = helper.findRoomExists(targetLevel, targetRoomID);
         AreaVisitor areaVisitor = helper.creatingAreaVisitor(targetRoom);
@@ -89,7 +95,7 @@ public class BuildingInfoController {
      */
     @RequestMapping(value = "/cubature/building/{targetBuildingID}", method = RequestMethod.GET, produces = "application/json")
     public long getCubatureBuilding(@PathVariable int targetBuildingID) {
-        Building targetBuilding = helper.findBuildingExists(buildingsCollection, targetBuildingID);
+        Building targetBuilding = helper.findBuildingExists(scheme.getBuildings(), targetBuildingID);
         CubatureVisitor cubatureVisitor = helper.creatingCubatureVisitor(targetBuilding);
         return cubatureVisitor.getResult();
     }
@@ -102,7 +108,7 @@ public class BuildingInfoController {
      */
     @RequestMapping(value = "/cubature/level/{targetBuildingID}/{targetLevelID}", method = RequestMethod.GET, produces = "application/json")
     public long getCubatureLevel(@PathVariable int targetBuildingID, @PathVariable int targetLevelID) {
-        Building targetBuilding = helper.findBuildingExists(buildingsCollection, targetBuildingID);
+        Building targetBuilding = helper.findBuildingExists(scheme.getBuildings(), targetBuildingID);
         Level targetLevel = helper.findLevelExists(targetBuilding, targetLevelID);
         CubatureVisitor cubatureVisitor = helper.creatingCubatureVisitor(targetLevel);
         return cubatureVisitor.getResult();
@@ -117,7 +123,7 @@ public class BuildingInfoController {
      */
     @RequestMapping(value = "/cubature/room/{targetBuildingID}/{targetLevelID}/{targetRoomID}", method = RequestMethod.GET, produces = "application/json")
     public long getCubatureRoom(@PathVariable int targetBuildingID, @PathVariable int targetLevelID, @PathVariable int targetRoomID) {
-        Building targetBuilding = helper.findBuildingExists(buildingsCollection, targetBuildingID);
+        Building targetBuilding = helper.findBuildingExists(scheme.getBuildings(), targetBuildingID);
         Level targetLevel = helper.findLevelExists(targetBuilding, targetLevelID);
         Room targetRoom = helper.findRoomExists(targetLevel, targetRoomID);
         CubatureVisitor cubatureVisitor = helper.creatingCubatureVisitor(targetRoom);
