@@ -8,19 +8,27 @@ import pl.put.poznan.buildinginfo.logic.Visitor.Visitor;
  * This interface defines Element role in the Visitor pattern, providing easy way for algorithms
  * to traverse data without modifying concrete object
  */
-public interface Location {
+public abstract class Location {
+
+    protected int id;
+    protected String name;
+
     /**
      * @return the unique ID characteristic for each Location
      */
-    public int getId();
+    public int getId() {return id;}
     /**
      * @return human-readable name of the given Location
      */
-    public String getName();
+    public String getName() {return name;}
+
+    public void setId(int id) { this.id = id; }
+
+    public void setName(String name) { this.name = name; }
 
     /**
      * Accepts Visitor that perform specific operation on this Location
      * @param v the Visitor that will perform operation on this Location
      */
-    public void accept(Visitor v);
+    public abstract void accept(Visitor v);
 }
