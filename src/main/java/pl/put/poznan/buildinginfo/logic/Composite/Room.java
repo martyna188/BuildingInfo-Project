@@ -5,10 +5,10 @@ import pl.put.poznan.buildinginfo.logic.Visitor.Visitor;
 public class Room implements Location {
     private int id;
     private String name;
-    private long roomArea;
-    private long roomCubature;
-    private long roomLight;
-    private long roomHeating;
+    private long area;
+    private long cubature;
+    private long light;
+    private long heating;
 
 
     @Override
@@ -23,22 +23,22 @@ public class Room implements Location {
     }
 
     public long checkArea(){
-        return this.roomArea;
+        return this.area;
     }
     public long checkCubature(){
-        return this.roomCubature;
+        return this.cubature;
     }
     public long checkLight(){
-        return this.roomLight;
+        return this.light;
     }
     public long checkHeating(){
-        return this.roomHeating;
+        return this.heating;
     }
 
     public void setId(int id) { this.id = id; }
     public void setName(String name) { this.name = name; }
-    public void setRoomArea(long roomArea) { this.roomArea = roomArea; }
-    public void setRoomCubature(long roomCubature) { this.roomCubature = roomCubature; }
-    public void setRoomLight(long roomLight) { this.roomLight = roomLight; }
-    public void setRoomHeating(long roomHeating) { this.roomHeating = roomHeating; }
+    public void setArea(long area) { this.area = area; }
+    public void setCubature(long cubature) { this.cubature = cubature; }
+    public void setLight(long light) { this.light = light; }
+    public void setHeating(long heating) { this.heating = heating; }
 }

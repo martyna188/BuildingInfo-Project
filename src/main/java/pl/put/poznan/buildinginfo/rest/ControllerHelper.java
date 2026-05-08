@@ -9,9 +9,7 @@ import pl.put.poznan.buildinginfo.logic.Composite.Location;
 import pl.put.poznan.buildinginfo.logic.Composite.Room;
 import pl.put.poznan.buildinginfo.logic.Visitor.AreaVisitor;
 import pl.put.poznan.buildinginfo.logic.Visitor.CubatureVisitor;
-
 import java.util.List;
-
 import static pl.put.poznan.buildinginfo.rest.BuildingInfoController.logger;
 
 @Service
