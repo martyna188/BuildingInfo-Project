@@ -1,0 +1,240 @@
+{
+  "buildings": [
+    {
+      "id": 1,
+      "name": "Main Building",
+      "childrenLevels": [
+        {
+          "id": 10,
+          "name": "Ground Floor",
+          "childrenRooms": [
+            {
+              "id": 100,
+              "name": "Lobby",
+              "area": 150,
+              "cubature": 600,
+              "light": 45000,
+              "heating": 3000
+            },
+            {
+              "id": 101,
+              "name": "Cafeteria",
+              "area": 200,
+              "cubature": 800,
+              "light": 60000,
+              "heating": 5000
+            },
+            {
+              "id": 102,
+              "name": "Kitchen",
+              "area": 80,
+              "cubature": 320,
+              "light": 40000,
+              "heating": 1500
+            }
+          ]
+        },
+        {
+          "id": 11,
+          "name": "First Floor",
+          "childrenRooms": [
+            {
+              "id": 110,
+              "name": "Office 101",
+              "area": 40,
+              "cubature": 120,
+              "light": 16000,
+              "heating": 1000
+            },
+            {
+              "id": 111,
+              "name": "Conference Room A",
+              "area": 80,
+              "cubature": 240,
+              "light": 48000,
+              "heating": 2000
+            },
+            {
+              "id": 112,
+              "name": "Server Room",
+              "area": 25,
+              "cubature": 75,
+              "light": 7500,
+              "heating": 0
+            },
+            {
+              "id": 113,
+              "name": "Restroom",
+              "area": 15,
+              "cubature": 45,
+              "light": 3000,
+              "heating": 500
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "name": "Second Floor",
+          "childrenRooms": [
+            {
+              "id": 120,
+              "name": "Executive Suite",
+              "area": 60,
+              "cubature": 180,
+              "light": 24000,
+              "heating": 1500
+            },
+            {
+              "id": 121,
+              "name": "Office 202",
+              "area": 40,
+              "cubature": 120,
+              "light": 16000,
+              "heating": 1000
+            },
+            {
+              "id": 122,
+              "name": "Boardroom",
+              "area": 100,
+              "cubature": 300,
+              "light": 50000,
+              "heating": 2500
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Research Annex",
+      "childrenLevels": [
+        {
+          "id": 20,
+          "name": "Basement Level",
+          "childrenRooms": [
+            {
+              "id": 200,
+              "name": "Laboratory Alpha",
+              "area": 120,
+              "cubature": 360,
+              "light": 120000,
+              "heating": 4000
+            },
+            {
+              "id": 201,
+              "name": "Chemical Storage",
+              "area": 60,
+              "cubature": 180,
+              "light": 12000,
+              "heating": 1500
+            },
+            {
+              "id": 202,
+              "name": "Decontamination Area",
+              "area": 30,
+              "cubature": 90,
+              "light": 15000,
+              "heating": 800
+            }
+          ]
+        },
+        {
+          "id": 21,
+          "name": "Ground Floor",
+          "childrenRooms": [
+            {
+              "id": 210,
+              "name": "Laboratory Beta",
+              "area": 140,
+              "cubature": 420,
+              "light": 140000,
+              "heating": 4500
+            },
+            {
+              "id": 211,
+              "name": "Researcher Lounge",
+              "area": 45,
+              "cubature": 135,
+              "light": 13500,
+              "heating": 1200
+            },
+            {
+              "id": 212,
+              "name": "Equipment Room",
+              "area": 50,
+              "cubature": 150,
+              "light": 25000,
+              "heating": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Warehouse complex",
+      "childrenLevels": [
+        {
+          "id": 30,
+          "name": "Main Level",
+          "childrenRooms": [
+            {
+              "id": 300,
+              "name": "Storage Bay 1",
+              "area": 1500,
+              "cubature": 12000,
+              "light": 450000,
+              "heating": 25000
+            },
+            {
+              "id": 301,
+              "name": "Storage Bay 2",
+              "area": 1500,
+              "cubature": 12000,
+              "light": 450000,
+              "heating": 25000
+            },
+            {
+              "id": 302,
+              "name": "Logistics Office",
+              "area": 35,
+              "cubature": 105,
+              "light": 14000,
+              "heating": 1000
+            },
+            {
+              "id": 303,
+              "name": "Loading Dock",
+              "area": 250,
+              "cubature": 2000,
+              "light": 100000,
+              "heating": 0
+            }
+          ]
+        },
+        {
+          "id": 31,
+          "name": "Mezzanine",
+          "childrenRooms": [
+            {
+              "id": 310,
+              "name": "Security Office",
+              "area": 20,
+              "cubature": 60,
+              "light": 6000,
+              "heating": 800
+            },
+            {
+              "id": 311,
+              "name": "Inventory Control",
+              "area": 45,
+              "cubature": 135,
+              "light": 18000,
+              "heating": 1200
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
