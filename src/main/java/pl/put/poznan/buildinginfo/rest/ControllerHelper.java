@@ -14,6 +14,20 @@ import static pl.put.poznan.buildinginfo.rest.BuildingInfoController.logger;
 
 @Service
 public class ControllerHelper {
+
+    public Location findLocationExists(Location location, int targetId) {
+        logger.debug("[findLocationExists] Looking for location with ID " + targetId);
+        for (Location childLocation : location.getChildren()) {
+            if (childLocation.getId() == targetId) {
+                logger.debug("Location with id " + targetId + " found.");
+                return childLocation;
+            }
+        }
+        logger.debug("[findLocationExists] Location with id " + targetId + " not found.");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Location ID not found");
+    }
+
+    /*
     public Building findBuildingExists (List<Building> buildingsCollection, int targetBuildingId) {
         logger.debug("[findBuildingExists] Looking for building with ID " + targetBuildingId);
         for (Building building : buildingsCollection) {
@@ -28,7 +42,7 @@ public class ControllerHelper {
 
     public Level findLevelExists (Building targetBuilding, int targetLevelId) {
         logger.debug("[findLevelExists] Looking for Level with ID " + targetLevelId);
-        for (Level level : targetBuilding.getChildrenLevels()) {
+        for (Level level : targetBuilding.getChildren()) {
             if (level.getId() == targetLevelId) {
                 logger.debug("Level with id " + targetLevelId + " found.");
                 return level;
@@ -40,7 +54,7 @@ public class ControllerHelper {
 
     public Room findRoomExists (Level targetLevel, int targetRoomId) {
         logger.debug("[findRoomExists] Looking for Room with ID " + targetRoomId);
-        for (Room targetRoom : targetLevel.getChildrenRooms()) {
+        for (Room targetRoom : targetLevel.getChildren()) {
             if (targetRoom.getId() == targetRoomId) {
                 logger.debug("Room with id " + targetRoomId + " found.");
                 return targetRoom;
@@ -49,6 +63,7 @@ public class ControllerHelper {
         logger.debug("[findRoomExists] Room with id " + targetRoomId + " not found.");
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Room ID not found");
     }
+    */
 
     public AreaVisitor creatingAreaVisitor(Location targetLocation) {
         logger.debug("[creatingAreaVisitor] Creating Area Visitor and calculating area for location");

@@ -45,16 +45,11 @@ public class BuildingInfoController {
         //logger.debug("Building send: " + building.getName());
     }
 
-
-    /**
-     * calculating area of the building from collection we already store.
-     * @param targetBuildingID id of the building from which we want area
-     * @return total area of the building
-     */
-    @RequestMapping(value = "/area/building/{targetBuildingID}", method = RequestMethod.GET, produces = "application/json")
-    public long getAreaBuilding(@PathVariable int targetBuildingID) {
+    @RequestMapping(value = "/area/{targetBuildingID}", method = RequestMethod.GET, produces = "application/json")
+    public long getAreaLevel(@PathVariable int targetBuildingID) {
         Building targetBuilding = helper.findBuildingExists(scheme.getBuildings(), targetBuildingID);
-        AreaVisitor areaVisitor = helper.creatingAreaVisitor(targetBuilding);
+        Level targetLevel = helper.findLevelExists(targetBuilding, targetLevelID);
+        AreaVisitor areaVisitor = helper.creatingAreaVisitor(targetLevel);
         return areaVisitor.getResult();
     }
 
@@ -64,6 +59,7 @@ public class BuildingInfoController {
      * @param targetLevelID id of the level from which we want area
      * @return total area of the level
      */
+    /*
     @RequestMapping(value = "/area/level/{targetBuildingID}/{targetLevelID}", method = RequestMethod.GET, produces = "application/json")
     public long getAreaLevel(@PathVariable int targetBuildingID, @PathVariable int targetLevelID) {
         Building targetBuilding = helper.findBuildingExists(scheme.getBuildings(), targetBuildingID);
@@ -71,7 +67,7 @@ public class BuildingInfoController {
         AreaVisitor areaVisitor = helper.creatingAreaVisitor(targetLevel);
         return areaVisitor.getResult();
     }
-
+    */
     /**
      * calculating area of the room from provided level from building collection we already store
      * @param targetBuildingID id of the building from which we want level
@@ -79,6 +75,7 @@ public class BuildingInfoController {
      * @param targetRoomID id of the room from which we want area
      * @return area of the room
      */
+    /*
     @RequestMapping(value = "/area/room/{targetBuildingID}/{targetLevelID}/{targetRoomID}", method = RequestMethod.GET, produces = "application/json")
     public long getAreaRoom(@PathVariable int targetBuildingID, @PathVariable int targetLevelID, @PathVariable int targetRoomID) {
         Building targetBuilding = helper.findBuildingExists(scheme.getBuildings(), targetBuildingID);
@@ -87,25 +84,29 @@ public class BuildingInfoController {
         AreaVisitor areaVisitor = helper.creatingAreaVisitor(targetRoom);
         return areaVisitor.getResult();
     }
+    */
 
+     */
     /**
      * calculating cubature of the level from building collection we already store
      * @param targetBuildingID id of the building from which we want cubature
      * @return total cubature of the building
      */
+    /*
     @RequestMapping(value = "/cubature/building/{targetBuildingID}", method = RequestMethod.GET, produces = "application/json")
     public long getCubatureBuilding(@PathVariable int targetBuildingID) {
         Building targetBuilding = helper.findBuildingExists(scheme.getBuildings(), targetBuildingID);
         CubatureVisitor cubatureVisitor = helper.creatingCubatureVisitor(targetBuilding);
         return cubatureVisitor.getResult();
     }
-
+    */
     /**
      * calculating cubature of the level from building collection we already store
      * @param targetBuildingID id of the building from which we want level
      * @param targetLevelID id of the level from which we want cubature
      * @return total cubature of the level
      */
+    /*
     @RequestMapping(value = "/cubature/level/{targetBuildingID}/{targetLevelID}", method = RequestMethod.GET, produces = "application/json")
     public long getCubatureLevel(@PathVariable int targetBuildingID, @PathVariable int targetLevelID) {
         Building targetBuilding = helper.findBuildingExists(scheme.getBuildings(), targetBuildingID);
@@ -113,6 +114,7 @@ public class BuildingInfoController {
         CubatureVisitor cubatureVisitor = helper.creatingCubatureVisitor(targetLevel);
         return cubatureVisitor.getResult();
     }
+    */
 
     /**
      * calculating cubature of the room from provided level from building collection we already store
@@ -121,6 +123,7 @@ public class BuildingInfoController {
      * @param targetRoomID  id of the room from which we want cubature
      * @return cubature of the room
      */
+    /*
     @RequestMapping(value = "/cubature/room/{targetBuildingID}/{targetLevelID}/{targetRoomID}", method = RequestMethod.GET, produces = "application/json")
     public long getCubatureRoom(@PathVariable int targetBuildingID, @PathVariable int targetLevelID, @PathVariable int targetRoomID) {
         Building targetBuilding = helper.findBuildingExists(scheme.getBuildings(), targetBuildingID);
@@ -129,6 +132,8 @@ public class BuildingInfoController {
         CubatureVisitor cubatureVisitor = helper.creatingCubatureVisitor(targetRoom);
         return cubatureVisitor.getResult();
     }
+
+    */
 }
 
 

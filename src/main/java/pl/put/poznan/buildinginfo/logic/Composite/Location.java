@@ -11,7 +11,7 @@ import pl.put.poznan.buildinginfo.logic.Visitor.Visitor;
 public abstract class Location {
 
     protected int id;
-    protected String name;
+    protected String name = "not specified";
 
     /**
      * @return the unique ID characteristic for each Location
