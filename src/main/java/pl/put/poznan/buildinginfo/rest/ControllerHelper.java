@@ -15,55 +15,43 @@ import static pl.put.poznan.buildinginfo.rest.BuildingInfoController.logger;
 @Service
 public class ControllerHelper {
 
-    public Location findLocationExists(Location location, int targetId) {
-        logger.debug("[findLocationExists] Looking for location with ID " + targetId);
-        for (Location childLocation : location.getChildren()) {
-            if (childLocation.getId() == targetId) {
-                logger.debug("Location with id " + targetId + " found.");
-                return childLocation;
-            }
-        }
-        logger.debug("[findLocationExists] Location with id " + targetId + " not found.");
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Location ID not found");
+    public long calculateArea(String targetID) {
+        ArrayList<String> locationIDs = new ArrayList<>(Array.asList(targetID.split("-")));
+        Location location = locationHandler(building, locationIDs);
+
     }
 
-    /*
-    public Building findBuildingExists (List<Building> buildingsCollection, int targetBuildingId) {
-        logger.debug("[findBuildingExists] Looking for building with ID " + targetBuildingId);
-        for (Building building : buildingsCollection) {
-            if (building.getId() == targetBuildingId) {
-                logger.debug("Building with id " + targetBuildingId + " found.");
-                return building;
-            }
+    public Location locationHandler(Building building, ArrayList<String> locationIDs){
+        Location location = findLocationExists(building, locationIDs);
+        if (location == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Given Location ID Not Found");
         }
-        logger.debug("[findBuildingExists] Building with id " + targetBuildingId + " not found.");
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Building ID not found");
+        return location;
     }
 
-    public Level findLevelExists (Building targetBuilding, int targetLevelId) {
-        logger.debug("[findLevelExists] Looking for Level with ID " + targetLevelId);
-        for (Level level : targetBuilding.getChildren()) {
-            if (level.getId() == targetLevelId) {
-                logger.debug("Level with id " + targetLevelId + " found.");
-                return level;
-            }
+    public Location findLocationExists(Location location, ArrayList<String> targetIDs) {
+        if (targetIDs.isEmpty()) {
+            throw new RuntimeException("Method has a bug or user didn't specify any location ID");
         }
-        logger.debug("[findLevelExists] Level with id " + targetLevelId + " not found.");
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Level ID not found");
-    }
 
-    public Room findRoomExists (Level targetLevel, int targetRoomId) {
-        logger.debug("[findRoomExists] Looking for Room with ID " + targetRoomId);
-        for (Room targetRoom : targetLevel.getChildren()) {
-            if (targetRoom.getId() == targetRoomId) {
-                logger.debug("Room with id " + targetRoomId + " found.");
-                return targetRoom;
+        int targetID = Integer.parseInt(targetIDs.remove(0));
+
+        if (location.getId() == targetID) {
+            if (targetIDs.isEmpty()) {
+                return location;
+            }
+            if (location instanceof CompositeLocation) {
+                CompositeLocation composite = (CompositeLocation) location;
+                for (Location child : composite.getChildren()) {
+                    Location result = findLocationExists(child, targetIDs);
+                    if (result != null) {
+                        return result;
+                    }
+                }
             }
         }
-        logger.debug("[findRoomExists] Room with id " + targetRoomId + " not found.");
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Room ID not found");
+        return null;
     }
-    */
 
     public AreaVisitor creatingAreaVisitor(Location targetLocation) {
         logger.debug("[creatingAreaVisitor] Creating Area Visitor and calculating area for location");

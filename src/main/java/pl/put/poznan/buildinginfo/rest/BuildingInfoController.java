@@ -3,12 +3,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.buildinginfo.logic.Composite.Building;
-import pl.put.poznan.buildinginfo.logic.Composite.Level;
-import pl.put.poznan.buildinginfo.logic.Composite.Room;
-import pl.put.poznan.buildinginfo.logic.Composite.Scheme;
-import pl.put.poznan.buildinginfo.logic.Visitor.*;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 
 @RestController
@@ -21,8 +15,6 @@ public class BuildingInfoController {
     /** Helper that store all needed functions for computations*/
     private final ControllerHelper helper;
 
-    private Scheme scheme;
-
     /**
      * Constructor for helper which store all needed functions for computations
      * This Constructor is used by Spring and is triggered when applications starts
@@ -31,26 +23,28 @@ public class BuildingInfoController {
     public BuildingInfoController(ControllerHelper helper) {
         this.helper = helper;
     }
+
+    private Building building;
+
     /**
      * function for accepting building for later access
      * @param scheme input in JSON format with building, levels and rooms (each with id, name
      *                 and room with additional area, volume, light and heating
      */
-    @RequestMapping(value = "/scheme/post", method = RequestMethod.POST, produces = "application/json")
-    public void sendBuilding(@RequestBody Scheme scheme) {
-        this.scheme = scheme;
-        logger.debug(scheme.getBuildings().toString());
-        logger.debug("HEREEEEEEEE");
-        logger.debug("Adding building to collection:  with ID ");
-        //logger.debug("Building send: " + building.getName());
+    @RequestMapping(value = "/building/post", method = RequestMethod.POST, produces = "application/json")
+    public void sendBuilding(@RequestBody Building building) {
+        this.building = building;
+        logger.debug("Adding building");
     }
 
-    @RequestMapping(value = "/area/{targetBuildingID}", method = RequestMethod.GET, produces = "application/json")
-    public long getAreaLevel(@PathVariable int targetBuildingID) {
-        Building targetBuilding = helper.findBuildingExists(scheme.getBuildings(), targetBuildingID);
-        Level targetLevel = helper.findLevelExists(targetBuilding, targetLevelID);
-        AreaVisitor areaVisitor = helper.creatingAreaVisitor(targetLevel);
-        return areaVisitor.getResult();
+    @RequestMapping(value = "/area/{targetID}", method = RequestMethod.GET, produces = "application/json")
+    public long getArea(@PathVariable String targetID) {
+        return helper.calculateArea(targetID);
+    }
+
+    @RequestMapping(value = "/cubature/{targetID}", method = RequestMethod.GET, produces = "application/json")
+    public long getArea(@PathVariable String targetID) {
+        return helper.calculateCubature(targetID);
     }
 
     /**
