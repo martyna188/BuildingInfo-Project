@@ -8,9 +8,7 @@ import pl.put.poznan.buildinginfo.logic.Composite.Building;
 import pl.put.poznan.buildinginfo.logic.Composite.Level;
 import pl.put.poznan.buildinginfo.logic.Composite.Location;
 import pl.put.poznan.buildinginfo.logic.Composite.Room;
-import pl.put.poznan.buildinginfo.logic.Visitor.Visitor;
-import pl.put.poznan.buildinginfo.logic.Visitor.AreaVisitor;
-import pl.put.poznan.buildinginfo.logic.Visitor.CubatureVisitor;
+import pl.put.poznan.buildinginfo.logic.Visitor.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -65,6 +63,12 @@ public class ControllerHelper {
                 break;
             case "cubature":
                 visitor = new CubatureVisitor();
+                break;
+            case "heat":
+                visitor = new HeatingVisitor();
+                break;
+            case "light":
+                visitor = new LightingVisitor();
                 break;
             default:
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Provided metric is not supported.");
