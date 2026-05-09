@@ -40,6 +40,8 @@ public class BuildingInfoController {
 
         if (building.getChildren() != null) {
             logger.debug("Number of Levels: {}", building.getChildren().size());
+            for (LocationComposite level : building.getChildren()){
+                logger.debug("Number of Rooms on level {}: {}", level.getId() ,level.getChildren().size());}
         } else {
             logger.error("Building contains NO levels! Check your JSON structure.");
         }

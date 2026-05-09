@@ -27,26 +27,26 @@ public class ControllerHelper {
     }
 
     public Location locationHandler(Building building, ArrayList<String> locationIDs){
-        Location location = findLocationExists(building, locationIDs);
+        Location location = findLocationExists(building, locationIDs, 0);
         if (location == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Given Location ID Not Found");
         }
         return location;
     }
 
-    public Location findLocationExists(Location location, ArrayList<String> targetIDs) {
+    public Location findLocationExists(Location location, ArrayList<String> targetIDs, int i) {
         if (targetIDs.isEmpty()) {
             throw new RuntimeException("Method has a bug or user didn't specify any location ID");
         }
-        int targetID = Integer.parseInt(targetIDs.remove(0));
+        int targetID = Integer.parseInt(targetIDs.get(i));
         if (location.getId() == targetID) {
-            if (targetIDs.isEmpty()) {
+            if (i == targetIDs.size()-1) {
                 return location;
             }
             if (location instanceof LocationComposite) {
                 LocationComposite composite = (LocationComposite) location;
                 for (Location child : composite.getChildren()) {
-                    Location result = findLocationExists(child, targetIDs);
+                    Location result = findLocationExists(child, targetIDs, i+1);
                     if (result != null) {
                         return result;
                     }
@@ -70,10 +70,10 @@ public class ControllerHelper {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Provided metric is not supported.");
 
         }
-        logger.debug("[visitorHandler] Created Visitor for: ", metric);
+        logger.debug("[visitorHandler] Created Visitor for: {}", metric);
 
         location.accept(visitor);
-        logger.debug("[visitorHandler] Calculated " + metric + " for: " + location.getName());
+        logger.debug("[visitorHandler] Calculated {} for: {}", metric, location.getName());
 
         return visitor;
     }
