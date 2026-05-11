@@ -18,6 +18,7 @@ import static pl.put.poznan.buildinginfo.rest.BuildingInfoController.logger;
 @Service
 public class ControllerHelper {
     public long calculate(String metric, String targetID, Building building) {
+        verifyBuildingJSON(building);
         ArrayList<String> locationIDs = new ArrayList<>(Arrays.asList(targetID.split("-")));
         Location location = locationHandler(building, locationIDs);
         Visitor visitor = visitorHandler(metric, location);
@@ -64,7 +65,7 @@ public class ControllerHelper {
             case "cubature":
                 visitor = new CubatureVisitor();
                 break;
-            case "heat":
+            case "heating":
                 visitor = new HeatingVisitor();
                 break;
             case "light":
@@ -80,5 +81,73 @@ public class ControllerHelper {
         logger.debug("[visitorHandler] Calculated {} for: {}", metric, location.getName());
 
         return visitor;
+    }
+
+    public String getOverheatedRoomsReport(long heatingThreshold, Building building) {
+        verifyBuildingJSON(building);
+        logger.debug("searches through building");
+        ArrayList<Room> overheatedRooms = findOverheatedRooms(heatingThreshold, building);
+        logger.debug("formats list of rooms into a string");
+        String overheatedRoomsReport = formatOverheatedRooms(overheatedRooms);
+        return overheatedRoomsReport;
+    }
+
+    public ArrayList<Room> findOverheatedRooms(long heatingThreshold, Building building) {
+        ArrayList<Room> overheatedRooms = new ArrayList<Room>();
+        logger.debug("[findOverheatedRooms] loops through building");
+        for (Level level : building.getChildren()) {
+            for (Room room : level.getChildren()) {
+                Visitor visitor = visitorHandler("heating", room);
+                long roomHeating = visitor.getResult();
+                if (roomHeating > heatingThreshold) {
+                    overheatedRooms.add(room);
+                }
+            }
+        }
+        logger.debug("[findOverheatedRooms] returns found overheated rooms");
+        return overheatedRooms;
+    }
+
+    public String formatOverheatedRooms(ArrayList<Room> overheatedRooms) {
+        //String is immutable, adding text would create every time new object,
+        //StringBuilder is mutable with .append()
+        StringBuilder exceedingRoomsInfo = new StringBuilder("Rooms with heating exceeding the threshold:\n");
+        logger.debug("[formatOverheatedRooms] loops through each overheated room");
+        for (Room overheatedRoom : overheatedRooms) {
+            String id = String.valueOf(overheatedRoom.getId());
+            String name = overheatedRoom.getName();
+            exceedingRoomsInfo
+                    .append("ID: ")
+                    .append(id)
+                    .append(", Name: ")
+                    .append(name)
+                    .append("\n");
+        }
+
+        logger.debug("[formatOverheatedRooms] returns report about overheated rooms");
+        return exceedingRoomsInfo.toString();
+    }
+
+    public void verifyBuildingJSON(Building building) {
+        logger.debug("[verifyBuildingJSON] Building Name: {}", building.getName());
+        logger.debug("[verifyBuildingJSON] Building ID: {}", building.getId());
+        if (building.getChildren() == null){
+            logger.debug("[verifyBuildingJSON] Building doesn't have any level!");
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Provided Building from JSON doesn't have any level!"
+            );
+        }
+        for (LocationComposite level : building.getChildren()) {
+            if (level.getChildren() == null) {
+                logger.debug("[verifyBuildingJSON] Level {} doesn't have any room!", level.getId());
+                throw new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Level " + level.getId() + " doesn't have any room!"
+                );
+            }
+        }
+        logger.debug("[verifyBuildingJSON] Building JSON is correct, " +
+                     "at least one level exists and each level has at least one room.");
     }
 }

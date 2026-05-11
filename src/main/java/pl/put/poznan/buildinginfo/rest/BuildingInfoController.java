@@ -4,6 +4,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.buildinginfo.logic.Composite.Building;
 import pl.put.poznan.buildinginfo.logic.Composite.LocationComposite;
+import pl.put.poznan.buildinginfo.logic.Composite.Room;
 
 
 @RestController
@@ -32,27 +33,20 @@ public class BuildingInfoController {
      */
     @RequestMapping(value = "/building/post", method = RequestMethod.POST, produces = "application/json")
     public void sendBuilding(@RequestBody Building building) {
+        logger.debug("[sendBuilding] receives json");
         this.building = building;
-
-        logger.debug("--- [DEBUG] Received Building Data ---");
-        logger.debug("Building Name: {}", building.getName());
-        logger.debug("Building ID: {}", building.getId());
-
-        if (building.getChildren() != null) {
-            logger.debug("Number of Levels: {}", building.getChildren().size());
-            for (LocationComposite level : building.getChildren()){
-                logger.debug("Number of Rooms on level {}: {}", level.getId() ,level.getChildren().size());}
-        } else {
-            logger.error("Building contains NO levels! Check your JSON structure.");
-        }
-        logger.debug("--- [DEBUG] End of Building Report ---");
     }
 
     @RequestMapping(value = "/{metric}/{targetID}", method = RequestMethod.GET, produces = "application/json")
-    public long getArea(@PathVariable String metric, @PathVariable String targetID) {
-        logger.debug("Calculating");
+    public long getMetric(@PathVariable String metric, @PathVariable String targetID) {
+        logger.debug("[getMetric] receives request");
         return helper.calculate(metric, targetID, building);
+    }
 
+    @RequestMapping(value = "/overheating/{parameter}", method = RequestMethod.GET, produces = "application/json")
+    public String getExceedingHeating(@PathVariable long parameter) {
+        logger.debug("[getExceedingHeating] receives request");
+        return helper.getOverheatedRoomsReport(parameter, building);
     }
 }
 
