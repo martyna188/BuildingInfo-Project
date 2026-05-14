@@ -11,7 +11,6 @@ import pl.put.poznan.buildinginfo.logic.Composite.Room;
 import pl.put.poznan.buildinginfo.logic.Visitor.*;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.ArrayList;
 import static pl.put.poznan.buildinginfo.rest.BuildingInfoController.logger;
 
