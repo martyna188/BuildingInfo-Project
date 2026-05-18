@@ -13,7 +13,7 @@
 
     <groupId>pl.put.poznan</groupId>
     <artifactId>building-info</artifactId>
-    <version>0.1</version>
+    <version>1.0</version>
     <name>Building Info</name>
     <description>REST API for building management and area calculations</description>
 
