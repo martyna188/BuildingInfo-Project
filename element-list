@@ -1,0 +1,4 @@
+pl.put.poznan.buildinginfo.app
+pl.put.poznan.buildinginfo.logic.Composite
+pl.put.poznan.buildinginfo.logic.Visitor
+pl.put.poznan.buildinginfo.rest
