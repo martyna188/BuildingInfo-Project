@@ -34,3 +34,13 @@ jobs:
         files: target/*.jar 
        
         generate_release_notes: true
+
+    - name: Generate Javadoc
+      run: mvn javadoc:javadoc
+
+    - name: Deploy Javadoc to GitHub Pages
+      if: github.ref == 'refs/heads/main'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./target/site/apidocs
