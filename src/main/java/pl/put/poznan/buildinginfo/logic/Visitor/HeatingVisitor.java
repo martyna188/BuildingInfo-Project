@@ -23,7 +23,7 @@ public class HeatingVisitor implements Visitor {
      */
     @Override
     public void visitRoom(Room r) {
-        total_cubature += r.checkArea();
+        total_cubature += r.checkCubature();
         total_heat += r.checkHeating();
     }
 
